@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 st.title('Try Your Hand At WKT!')
+st.write('WKT means Well-Known Text and represents vector geometry in an easy to understand /n
+         format.Below are some samples of WKT to try!')
+
 user = st.text_input("Enter WKT Below", value='POLYGON ((40 40, 20 45, 45 30, 40 40))')
 
 entry = user
