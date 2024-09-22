@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 st.title('Try Your Hand At WKT!')
-st.write('WKT means Well-Known Text and represents vector geometry in an easy to understand format. Below are some samples of WKT to try!')
+st.write('WKT means Well-Known Text and represents vector geometry in an easy to understand format.  Below are some samples of WKT to try!')
 
 st.write("""POINT (30 10)  
 	LINESTRING (30 10, 10 30, 40 40)  
