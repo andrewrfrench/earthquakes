@@ -1,4 +1,4 @@
 pandas
-geopandas
-matplotlib
+plotly express
 streamlit
+numpy
