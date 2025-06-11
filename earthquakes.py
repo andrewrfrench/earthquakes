@@ -69,7 +69,7 @@ if selection == 'Time':
       
     with container:
         with row1:
-            st.map(earthquakes[:1], zoom=6, color='#FF0000', size=125)
+            st.map(earthquakes[:1], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][0])
             st.text('When:' )
@@ -77,7 +77,7 @@ if selection == 'Time':
             st.text("Where:")
             st.text(earthquakes['place'][0])
         with row2:
-            st.map(earthquakes[1:2], zoom=6)
+            st.map(earthquakes[1:2], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][1])
             st.text('When:' )
@@ -85,7 +85,7 @@ if selection == 'Time':
             st.text("Where:")
             st.text(earthquakes['place'][1])
         with row3:
-            st.map(earthquakes[2:3], zoom=6)
+            st.map(earthquakes[2:3], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][2])
             st.text('When:' )
@@ -153,7 +153,7 @@ elif selection == 'Magnitude':
       
     with container:
         with row1:
-            st.map(earthquakes[:1], zoom=6)
+            st.map(earthquakes[:1], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][0])
             st.text('When:' )
@@ -161,7 +161,7 @@ elif selection == 'Magnitude':
             st.text("Where:")
             st.text(earthquakes['place'][0])
         with row2:
-            st.map(earthquakes[1:2], zoom=6)
+            st.map(earthquakes[1:2], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][1])
             st.text('When:' )
@@ -169,7 +169,7 @@ elif selection == 'Magnitude':
             st.text("Where:")
             st.text(earthquakes['place'][1])
         with row3:
-            st.map(earthquakes[2:3], zoom=6)
+            st.map(earthquakes[2:3], zoom=6, color='#FF0000')
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][2])
             st.text('When:' )
