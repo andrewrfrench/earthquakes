@@ -1,67 +1,96 @@
+import numpy as np
 import pandas as pd
-import geopandas as gpd
-import matplotlib.pyplot as plt
 import streamlit as st
+import plotly.express as px
 
-st.title('Try Your Hand At WKT!')
-st.write('WKT means Well-Known Text and represents vector geometry in an easy to understand format.')
+# Set page to take up whole screen
+st.set_page_config(layout="wide")
 
+# Header
+st.write("""
+# Analysis of Public Debt under Presidents
+""")
+
+# Spreadsheet to DataFrame
+df = pd.read_excel('/home/andrew/Documents/python_projects/federaldebt_pres.xlsx')
+
+# First selectbox sets data range for second select slider
+selection = st.selectbox(
+    "Option 1. Select a President",
+    options = df['president'].drop_duplicates()
+)
+
+# Creates a range tuple used in Dataframe creation for graphs
+selection1 = df[df['president']==selection]
+min_val1 = selection1['date'].min()
+max_val1 = selection1['date'].max()
+range_val = (min_val1,max_val1)
+
+# Second selection adjusts date range
+start1, stop1 = st.select_slider(
+    "Option 2. Select a date range",
+    options=df['date'].to_list(),
+    value=range_val
+    )
+
+# Second selection creates start and stop point for new Dataframe for charts
+start = df[df['date']==start1].index[0]
+stop = df[df['date']==stop1].index[0]
+new_df = df[start:stop]
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    # Create bar chart with different colors for each president
+    fig1 = px.bar(new_df, x='date', y='ratio', color='president',
+                  labels={
+                         "date": "Date",
+                         "ratio": "Debt/GDP"
+                     },
+                    title="Federal Debt as % of GDP")
     
-def multi_split(data, delim):
-    split1 = data.split(delim)
-    new_sp = [item.strip() for item in split1]
-    new_l = [f"({x})" for x in new_sp]
-    return ' , '.join([str(s) for s in new_l])
+    # Style chart
+    fig1.update_yaxes(
+        showline=True, linewidth=2, linecolor='white', gridcolor='white', gridwidth=0.5)
+    fig1.update_xaxes(
+        showline=True, linewidth=2, linecolor='white')
+    fig1.update_layout(
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0, 0, 0, 0)'
+    )
+    st.plotly_chart(fig1, theme=None)
 
-with st.sidebar:
-    type = st.selectbox('Select one:', ('PRIMITIVES', 'MULTI_PART GEOMETRIES'))
+with col2:
+    # Create bar chart with different colors for each president
+    fig2 = px.bar(new_df, x='date', y='deficit', color='president',
+                  labels={
+                         "date": "Date",
+                         "ratio": "Surplus or Deficit/GDP"
+                     },
+                    title="Federal Surplus or Deficit as % of GDP")
     
-    if type == 'PRIMITIVES':
-        type2 = st.selectbox('Select one:', ('POINT', 'LINESTRING', 'POLYGON'))
-        if type2 == 'POINT':
-            coordinate = st.text_input("Enter an X and a Y coordinate:", value='40 50')
-            entry = f"{type2} ( {coordinate} )"
-        elif type2 == 'LINESTRING':
-            coordinate = st.text_input("Enter multiple X and Y coordinates, seperated by commas:", value='40 50, 30 20')
-            entry = f"{type2} ( {coordinate} )"
-        elif type2 == 'POLYGON':
-            coordinate = st.text_input("Enter over three X and Y coordinates, seperated by commas (Polyons must start and stop at same point):", value='40 40, 20 45, 45 30, 40 40')
-            entry = f"{type2} (( {coordinate} ))"
-        
-        
-        
-    elif type == 'MULTI_PART GEOMETRIES':
-        type2 = st.selectbox('Select one:', ('MULTIPOINT', 'MULTILINESTRING', 'MULTIPOLYGON'))
-        if type2 == 'MULTIPOINT':
-            coordinate = st.text_input("Enter multiple X and a Y coordinate, seperated by commas:", value='40 50, 30 20')
-            entry = f"{type2} ( {coordinate} )"
-        elif type2 == 'MULTILINESTRING':
-            coordinate = st.text_input("Enter multiple X and Y coordinates, seperated by commas, seperate lines by colons:", value='40 50, 30 20 : 100 30, 25 50')
-            recalc = multi_split(coordinate, ':')
-            entry = f"{type2} ( {recalc} )"
-        elif type2 == 'MULTIPOLYGON':
-            coordinate = st.text_input("Enter over three X and Y coordinates, seperated by commas, seperate polygons by colons (Polyons must start and stop at same point):", value='40 30, 20 45, 100 50, 40 30 : 100 120, 95 65, 50 55, 100 120')
-            recalc = multi_split(coordinate, ':')
-            entry = f"{type2} (( {recalc} ))"
-    
+    # Style chart
+    fig2.update_yaxes(
+        showline=True, linewidth=2, linecolor='white', gridcolor='white', gridwidth=0.5)
+    fig2.update_xaxes(
+        showline=True, linewidth=2, linecolor='white')
+    fig2.update_layout(
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0, 0, 0, 0)'
+    )
+    st.plotly_chart(fig2, theme=None)
 
-st.write("This is your WKT output:", entry)
-
-wkts = [
-entry
-]
-
-s = gpd.GeoSeries.from_wkt(wkts)
-y =gpd.GeoDataFrame(s)
-
-plt.style.use('dark_background')
-fig, axes = plt.subplots()
-
-s.plot(ax=axes)
-
-st.pyplot(fig)
+with col3:
+    # Create pie chart
+    fig3 = px.pie(new_df, values='count', names='president', title="Democrat-Republican % of Selection", color='color')
+    fig3.update_traces(textposition='inside', textinfo='percent+label')
+    st.plotly_chart(fig3, theme=None)
 
 
+
+# Footer
+st.write('Created by Andrew French')
+st.write('main data source: U.S. Office of Management and Budget and Federal Reserve Bank of St. Louis')
 
 
 
