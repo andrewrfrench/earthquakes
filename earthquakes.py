@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import requests
-import json
 from datetime import datetime
        
 # Set page to take up whole screen
@@ -142,7 +141,7 @@ elif selection == 'Magnitude':
     else:
         f = "failure"
     
-    st.title('High Magnitude Recent Earthquakes')
+    st.title('Recent High Magnitude Earthquakes')
     st.text('  ')
 
     
