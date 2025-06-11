@@ -1,5 +1,6 @@
 pandas
-plotly.express
+requests
 streamlit
 numpy
-openpyxl
+json
+datetime
