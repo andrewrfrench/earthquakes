@@ -65,8 +65,7 @@ with col2:
     fig2 = px.bar(new_df, x='date', y='deficit', color='president',
                   labels={
                          "date": "Date",
-                         "ratio": "Surplus or \n
-                         Deficit/GDP"
+                         "ratio": "Surplus or Deficit/GDP"
                      },
                     title="Federal Surplus or Deficit as % of GDP")
     
