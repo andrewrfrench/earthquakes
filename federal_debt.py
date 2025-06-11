@@ -12,7 +12,7 @@ st.write("""
 """)
 
 # Spreadsheet to DataFrame
-df = pd.read_excel('/home/andrew/Documents/python_projects/federaldebt_pres.xlsx')
+df = pd.read_excel('federaldebt_pres.xlsx')
 
 # First selectbox sets data range for second select slider
 selection = st.selectbox(
