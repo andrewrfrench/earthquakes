@@ -69,7 +69,7 @@ if selection == 'Time':
       
     with container:
         with row1:
-            st.map(earthquakes[:1], zoom=6, color='red', size='4')
+            st.map(earthquakes[:1], zoom=6, color='#FF0000', size=4)
             st.text('Magnitude:')
             st.text(earthquakes['magnitude'][0])
             st.text('When:' )
